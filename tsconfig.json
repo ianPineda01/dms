@@ -1,0 +1,9 @@
+{
+    "compilerOptions": {
+        "watch": true,
+    },
+    "include": [
+        "main.ts",
+        "mainRenderer.ts"
+    ]
+}

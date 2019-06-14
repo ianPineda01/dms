@@ -1,5 +1,4 @@
-import * as electron from "electron";
-const {app, BrowserWindow} = electron;
+import {app, BrowserWindow} from "electron";
 
 const createWindow = () =>{
     let window = new BrowserWindow({
