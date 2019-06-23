@@ -4,6 +4,7 @@
     },
     "include": [
         "main.ts",
-        "mainRenderer.ts"
+        "mainRenderer.ts",
+        "add.ts"
     ]
 }
