@@ -3,6 +3,7 @@ import * as url from "url";
 import * as path from "path";
 import * as fs from "fs";
 import * as console from "console";
+import { platform } from "os";
 let mainWindow:BrowserWindow = null;
 let addWindow:BrowserWindow = null;
 const createMainWindow = () =>{
@@ -18,7 +19,7 @@ const createMainWindow = () =>{
     mainWindow.on("closed", () =>{
         app.quit();
     });
-    Menu.setApplicationMenu(Menu.buildFromTemplate([{
+    Menu.setApplicationMenu(Menu.buildFromTemplate([ process.platform === "darwin" ? {label: app.getName()} : null ,{
             label:"Archivo",
             submenu:[{
                     label: "Añadir",
@@ -39,26 +40,37 @@ const createMainWindow = () =>{
                     click(){
                         app.quit();
                     }
+                },
+                {
+                    label: "Cerrar pestaña",
+                    accelerator: process.platform === "darwin" ? "Command+W" : "Ctrl+W",
+                    role: "close"
                 }
             ]
         },
         {
-            label: "Ventas"
+            label: "Ventas",
+            submenu:[]
         },
         {
-            label: "Base de datos"
+            label: "Base de datos",
+            submenu:[]
         },
         {
-            label: "Cotizaciones"
+            label: "Cotizaciones",
+            submenu:[]
         },
         {
-            label: "Compras"
+            label: "Compras",
+            submenu:[]
         },
         {
-            label: "Clientes"
+            label: "Clientes",
+            submenu:[]
         },
         {
-            label: "Facturas"
+            label: "Facturas",
+            submenu:[]
         }
     ]));
 }
@@ -71,7 +83,8 @@ const createAddWindow = ()=>{
             nodeIntegration: true
         }
     });
-    addWindow.loadFile("addWindow.html");
+    addWindow.loadFile("add.html");
+    addWindow.webContents.openDevTools();
 }
 
 app.on("ready", createMainWindow);

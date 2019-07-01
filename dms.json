@@ -1,0 +1,11 @@
+{
+    "ventas":[{
+        "quantity":10,
+        "code":"PRO",
+        "price":200,
+        "timeStamp":1000
+    }],
+    "facturas":[],
+    "cotizaciones":[],
+    "clientes":[]
+}

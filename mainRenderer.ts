@@ -42,7 +42,9 @@ const createRow: (input:sell) => HTMLTableRowElement = (input) =>{
     const tr = document.createElement("tr");
     tr.appendChild(createCell(input.quantity.toString()));
     tr.appendChild(createCell(input.code));
+    tr.appendChild(createCell(input.code));//to-do Check name from database
     tr.appendChild(createCell(input.price.toString()));
+    tr.appendChild(createCell((input.price * input.quantity).toString()));
     tr.appendChild(createCell(input.timeStamp.toString()));
     return tr;
 }
@@ -51,7 +53,9 @@ const createTableHeader: () => HTMLTableRowElement = () =>{
     const tr = document.createElement("tr");
     tr.appendChild(createHeader("Cantidad"));
     tr.appendChild(createHeader("Codigo"));
+    tr.appendChild(createHeader("Nombre"));
     tr.appendChild(createHeader("Precio"));
+    tr.appendChild(createHeader("Total"));
     tr.appendChild(createHeader("timeStamp"));
     return tr;
 }
