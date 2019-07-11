@@ -37,7 +37,6 @@ const createTableRow: () => HTMLTableRowElement = () =>{
     tr.appendChild(createTableCell());
     tr.appendChild(createTableCell());
     tr.appendChild(createTableCell());
-    tr.appendChild(createTableCell());
     tr.append
 
     return tr;
