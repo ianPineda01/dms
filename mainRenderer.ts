@@ -19,11 +19,20 @@ interface client{
     telefono:number
 }
 
+interface dbEntry{
+    code:string
+    name:string
+    men:number
+    may:number
+    pd:number
+}
+
 interface dms{
     ventas:sell[]
     facturas:factura[]
     cotizaciones:sell[]
     clientes:client[]
+    database:dbEntry[]
 }
 
 const createCell: (input:string) => HTMLTableDataCellElement = (input) =>{
@@ -84,4 +93,9 @@ ipcRenderer.on("fileNotSupported",()=>{
 
 ipcRenderer.on("file", (e,data:string)=>{
     document.body.appendChild(createTable(JSON.parse(data).ventas));
+    console.log(JSON.parse(data).database);
+});
+
+ipcRenderer.on("noFile", ()=>{
+    alert("No hay archivo");
 });

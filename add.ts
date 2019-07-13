@@ -19,16 +19,23 @@ const createMenu: () => HTMLDivElement = () =>{
     });
     return menu;
 }
-const createAddHeader = () =>{
+const createAddHeaderCell: (input:string) => HTMLTableHeaderCellElement = (input) =>{
     const th = document.createElement("th");
-    th.appendChild(createTableCell().appendChild(document.createTextNode("Cantidad")));
-    th.appendChild(createTableCell().appendChild(document.createTextNode("Codigo")));
-    th.appendChild(createTableCell().appendChild(document.createTextNode("Precio")));
-    th.appendChild(createTableCell().appendChild(document.createTextNode("Total")));
+    th.appendChild(document.createTextNode(input));
     return th;
+}
+const createAddHeader: () => HTMLTableRowElement = () =>{
+    const tr = document.createElement("tr");
+    tr.appendChild(createAddHeaderCell("Cantidad"));
+    tr.appendChild(createAddHeaderCell("Codigo"));
+    tr.appendChild(createAddHeaderCell("Nombre"));
+    tr.appendChild(createAddHeaderCell("Precio"));
+    tr.appendChild(createAddHeaderCell("Total"));
+    return tr;
 }
 const createTableCell: () => HTMLTableCellElement = () =>{
     const td = document.createElement("td");
+    td.contentEditable = "true";
     return td;
 }
 const createTableRow: () => HTMLTableRowElement = () =>{
@@ -37,8 +44,7 @@ const createTableRow: () => HTMLTableRowElement = () =>{
     tr.appendChild(createTableCell());
     tr.appendChild(createTableCell());
     tr.appendChild(createTableCell());
-    tr.append
-
+    tr.appendChild(createTableCell());
     return tr;
 }
 const createAddTable: () => HTMLTableElement = () =>{
@@ -55,4 +61,5 @@ const createWrapper: () =>HTMLDivElement = () =>{
 }
 window.onload = () =>{
     document.body.appendChild(createWrapper());
+    setTimeout(()=>{document.getElementsByTagName("td")[0].focus()},1);
 }

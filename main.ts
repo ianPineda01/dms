@@ -1,11 +1,8 @@
 import {app, BrowserWindow, Menu, ipcMain, IpcMessageEvent, Accelerator} from "electron";
-import * as url from "url";
-import * as path from "path";
 import * as fs from "fs";
-import * as console from "console";
-import { platform } from "os";
 let mainWindow:BrowserWindow = null;
 let addWindow:BrowserWindow = null;
+let filePath = null;
 const createMainWindow = () =>{
     mainWindow = new BrowserWindow({
         width: 800,
@@ -19,13 +16,16 @@ const createMainWindow = () =>{
     mainWindow.on("closed", () =>{
         app.quit();
     });
-    Menu.setApplicationMenu(Menu.buildFromTemplate([ process.platform === "darwin" ? {label: app.getName()} : null ,{
+    Menu.setApplicationMenu(Menu.buildFromTemplate([,{
             label:"Archivo",
-            submenu:[{
-                    label: "Añadir",
+            submenu:[{label: "Añadir",
                     accelerator: process.platform === "darwin" ? "Command+N" : "Ctrl+N",
                     click(){
-                        createAddWindow();
+                        if(filePath){
+                            createAddWindow();
+                        }else{
+                            mainWindow.webContents.send("noFile");
+                        }
                     }
                 },
                 {
@@ -77,8 +77,9 @@ const createMainWindow = () =>{
 
 const createAddWindow = ()=>{
     addWindow = new BrowserWindow({
-        width: 800,
-        height: 600,
+        width: 420,
+        height: 300,
+        frame:false,
         webPreferences:{
             nodeIntegration: true
         }
@@ -105,6 +106,7 @@ ipcMain.on("fileDropped", (e, path:string)=>{
     if(extension === "json"){
         const data = fs.readFileSync(path,"utf-8");
         mainWindow.webContents.send("file", data);
+        filePath = path;
     }else{
         mainWindow.webContents.send("fileNotSupported");
     }
