@@ -1,0 +1,20 @@
+table{
+    border-collapse: collapse;
+}
+table tr td{
+    padding: 3px;
+    border: 1px solid black;
+}
+#addTable{
+    margin-left: 36px;
+}
+#sideBar{
+    background-color: #EEE;
+    display: flex;
+    flex-flow: column;
+    width: 36px;
+    height:100vh;
+    position: fixed;
+    left:0;
+    top:0;
+}
