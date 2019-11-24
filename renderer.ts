@@ -1,7 +1,5 @@
 //==================== ====================
 let {ipcRenderer} = require("electron");
-let main:HTMLDivElement = document.createElement("div");
-let add:HTMLDivElement = document.createElement("div");
 
 //====================Interfaces====================
 
@@ -34,7 +32,6 @@ interface dms{
 }
 
 //====================Functions====================
-let a = document;
 const createCell: (input:string) => HTMLTableDataCellElement = (input) =>{
     const td = document.createElement("td");
     td.appendChild(document.createTextNode(input));
@@ -112,6 +109,7 @@ const createAdd: () => HTMLDivElement = () =>{
     wrapper.appendChild(createAddSideBar());
     wrapper.appendChild(document.createElement("div"));
     wrapper.appendChild(createAddTable());
+    wrapper.id = "add";
     return wrapper;
 }
 
@@ -122,6 +120,13 @@ const dragoverListenerFunction = (e) =>{
 const dropListenerFunction = (e) =>{
     e.preventDefault();
     ipcRenderer.send("fileDropped", e.dataTransfer.files[0].path);
+}
+
+const addKeyboardListenerFunction = (e:KeyboardEvent) =>{
+    if(e.key === "Enter"){
+        e.preventDefault();
+        document.getElementById("addTable").appendChild(createEditableRow()); 
+    }
 }
 
 //====================Event listeners====================
@@ -137,9 +142,9 @@ ipcRenderer.on("fileNotSupported",()=>{
     alert("Archivo no soportado");
 });
 
-ipcRenderer.on("file", (e,data:string)=>{
-    main.appendChild(createTable(JSON.parse(data).ventas));
-    document.body.appendChild(main);
+ipcRenderer.on("main", (e,data:string)=>{
+    document.body.innerHTML = "";
+    document.body.appendChild(createTable(JSON.parse(data).ventas));
     document.removeEventListener("dragover", dragoverListenerFunction);
     document.removeEventListener("drop", dropListenerFunction);
 });
@@ -149,9 +154,15 @@ ipcRenderer.on("noFile", () =>{
 });
 
 ipcRenderer.on("add", () =>{
-    add.appendChild(createAdd());
     document.body.innerHTML = "";
-    document.body.appendChild(add);
-    main = document.createElement("div");
-    add.style. display = "block";
+    document.body.appendChild(createAdd());
+    document.getElementById("add").style.display = "block";
+    document.addEventListener("keypress", addKeyboardListenerFunction);
+    setTimeout(() => {
+        document.querySelector("td").focus();
+    }, 0);
+});
+
+ipcRenderer.on("saveAdd", () =>{
+    console.log(document.querySelector("div"));
 });
